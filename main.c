@@ -248,7 +248,7 @@ void rTri(f32 x, f32 y, f32 z)
     {
         mIdent(&model);
         mTranslate(&model, x, y, z);
-        mRotate(&model, randf(), randf(), randf(), randf());
+        mRotate(&model, randf()*x2PI, randf(), randf(), randf());
         mScale(&model, SPHERE_SCALE, SPHERE_SCALE, SPHERE_SCALE);
         mMul(&modelview, &model, &view);
 
