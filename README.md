@@ -1,2 +1,2 @@
 # CyberdyneSystems
-A visual effect for the [https://voxdsp.com](VOXDSP.COM) homepage.
+A visual effect for the [VOXDSP.COM](https://voxdsp.com) homepage.
