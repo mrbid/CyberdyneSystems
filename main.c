@@ -248,6 +248,7 @@ void rTri(f32 x, f32 y, f32 z)
     {
         mIdent(&model);
         mTranslate(&model, x, y, z);
+        //mRotate(&model, randf(), randf(), randf(), randf());
         mRotate(&model, randf()*x2PI, randf(), randf(), randf());
         mScale(&model, SPHERE_SCALE, SPHERE_SCALE, SPHERE_SCALE);
         mMul(&modelview, &model, &view);
@@ -337,7 +338,7 @@ void main_loop()
     
     for(uint i = 0; i < MAX_SPHERES; i++)
     {
-        if(RENDER_PASS == 1){if(cxo == 0.f){glUniform3f(color_id, 0.f, 0.f, 1.f);}else{glUniform3f(color_id, 0.f, 0.22f + fabsf(sinf(t*2.f))*0.03f, 0.f);}}
+        if(RENDER_PASS == 1){if(cxo == 0.f){glUniform3f(color_id, 0.f, 0.f, 1.f);}else{glUniform3f(color_id, 0.f, 0.22 + fabs(sin(t*2.0))*0.03, 0.f);}}
 
         vec inc;
         vMulS(&inc, spheres[i].dir, SPHERE_SPEED);
