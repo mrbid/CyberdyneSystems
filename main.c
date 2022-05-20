@@ -344,7 +344,14 @@ void main_loop()
         vMulS(&inc, spheres[i].dir, SPHERE_SPEED);
         vAdd(&spheres[i].pos, spheres[i].pos, inc);
 
-        if(vMod(spheres[i].pos) > 1.f)
+        const f32 mod = vMod(spheres[i].pos);
+        if(mod > 1.1f) // lol it is leaking out of the unit sphere
+        {
+            vRuvTA(&spheres[i].pos); // random point on inside of unit sphere
+            vRuvBT(&spheres[i].dir); // random point on outside of unit sphere
+            vNorm(&spheres[i].dir); // hmm or not?
+        }
+        else if(mod >= 1.f)
         {
             vec sd = spheres[i].pos;
             vNorm(&sd);
