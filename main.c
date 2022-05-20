@@ -337,7 +337,7 @@ void main_loop()
     
     for(uint i = 0; i < MAX_SPHERES; i++)
     {
-        if(RENDER_PASS == 1){if(cxo == 0.f){glUniform3f(color_id, 0.f, 0.f, 1.f);}else{glUniform3f(color_id, 0.f, 0.22f, 0.f);}}
+        if(RENDER_PASS == 1){if(cxo == 0.f){glUniform3f(color_id, 0.f, 0.f, 1.f);}else{glUniform3f(color_id, 0.f, 0.22f + fabsf(sinf(t*2.f))*0.03f, 0.f);}}
 
         vec inc;
         vMulS(&inc, spheres[i].dir, SPHERE_SPEED);
