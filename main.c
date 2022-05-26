@@ -345,19 +345,22 @@ void main_loop()
         vAdd(&spheres[i].pos, spheres[i].pos, inc);
 
         const f32 mod = vMod(spheres[i].pos);
-        if(mod > 1.1f) // lol it is leaking out of the unit sphere
-        {
-            vRuvTA(&spheres[i].pos); // random point on inside of unit sphere
-            vRuvBT(&spheres[i].dir); // random point on outside of unit sphere
-            vNorm(&spheres[i].dir); // hmm or not?
-        }
-        else if(mod >= 1.f)
+        if(mod > 1.f)
         {
             vec sd = spheres[i].pos;
             vNorm(&sd);
 
             vReflect(&spheres[i].dir, spheres[i].dir, sd);
             vNorm(&spheres[i].dir); // hmm or not?
+
+            vec ob = spheres[i].pos;
+            vNorm(&ob);
+            vInv(&ob);
+
+            vec inc;
+            vMulS(&inc, ob, (mod-1.f)+SPHERE_SPEED);
+            // vMulS(&inc, spheres[i].dir, (mod-1.f)+SPHERE_SPEED);
+            vAdd(&spheres[i].pos, spheres[i].pos, inc);
         }
 
         for(uint j = 0; j < MAX_SPHERES; j++)
