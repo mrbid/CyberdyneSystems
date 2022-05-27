@@ -221,36 +221,30 @@ __attribute__((always_inline)) inline void modelBind1(const ESModel* mdl) // C c
 
 void rSphere(f32 x, f32 y, f32 z)
 {
-    if(RENDER_PASS == 1)
-    {
-        mIdent(&model);
-        mTranslate(&model, x, y, z);
-        mScale(&model, SPHERE_SCALE, SPHERE_SCALE, SPHERE_SCALE);
-        mMul(&modelview, &model, &view);
+    mIdent(&model);
+    mTranslate(&model, x, y, z);
+    mScale(&model, SPHERE_SCALE, SPHERE_SCALE, SPHERE_SCALE);
+    mMul(&modelview, &model, &view);
 
-        glUniformMatrix4fv(projection_id, 1, GL_FALSE, (f32*) &projection.m[0][0]);
-        glUniformMatrix4fv(modelview_id, 1, GL_FALSE, (f32*) &modelview.m[0][0]);
-        
-        glDrawElements(GL_TRIANGLES, low_numind, GL_UNSIGNED_SHORT, 0);
-    }
+    glUniformMatrix4fv(projection_id, 1, GL_FALSE, (f32*) &projection.m[0][0]);
+    glUniformMatrix4fv(modelview_id, 1, GL_FALSE, (f32*) &modelview.m[0][0]);
+    
+    glDrawElements(GL_TRIANGLES, low_numind, GL_UNSIGNED_SHORT, 0);
 }
 
 void rTri(f32 x, f32 y, f32 z)
 {
-    if(RENDER_PASS == 1)
-    {
-        mIdent(&model);
-        mTranslate(&model, x, y, z);
-        //mRotate(&model, randf(), randf(), randf(), randf());
-        mRotate(&model, randf()*x2PI, randf(), randf(), randf());
-        mScale(&model, SPHERE_SCALE, SPHERE_SCALE, SPHERE_SCALE);
-        mMul(&modelview, &model, &view);
+    mIdent(&model);
+    mTranslate(&model, x, y, z);
+    //mRotate(&model, randf(), randf(), randf(), randf());
+    mRotate(&model, randf()*x2PI, randf(), randf(), randf());
+    mScale(&model, SPHERE_SCALE, SPHERE_SCALE, SPHERE_SCALE);
+    mMul(&modelview, &model, &view);
 
-        glUniformMatrix4fv(projection_id, 1, GL_FALSE, (f32*) &projection.m[0][0]);
-        glUniformMatrix4fv(modelview_id, 1, GL_FALSE, (f32*) &modelview.m[0][0]);
-        
-        glDrawElements(GL_TRIANGLES, tri_numind, GL_UNSIGNED_SHORT, 0);
-    }
+    glUniformMatrix4fv(projection_id, 1, GL_FALSE, (f32*) &projection.m[0][0]);
+    glUniformMatrix4fv(modelview_id, 1, GL_FALSE, (f32*) &modelview.m[0][0]);
+    
+    glDrawElements(GL_TRIANGLES, tri_numind, GL_UNSIGNED_SHORT, 0);
 }
 
 //*************************************
@@ -379,10 +373,13 @@ void main_loop()
             }
         }
 
-        if(cxo == 0.f)
-            rSphere(spheres[i].pos.x, spheres[i].pos.y, spheres[i].pos.z);
-        else
-            rTri(spheres[i].pos.x, spheres[i].pos.y, spheres[i].pos.z);
+        if(RENDER_PASS == 1)
+        {
+            if(cxo == 0.f)
+                rSphere(spheres[i].pos.x, spheres[i].pos.y, spheres[i].pos.z);
+            else
+                rTri(spheres[i].pos.x, spheres[i].pos.y, spheres[i].pos.z);
+        }
     }
 
     if(RENDER_PASS == 1 && cxo != 0.f)
