@@ -631,7 +631,7 @@ int main(int argc, char** argv)
     
     glEnable(GL_CULL_FACE);
     glEnable(GL_DEPTH_TEST);
-    glClearColor(0.13, 0.13, 0.13, 0.0);
+    glClearColor(0.13f, 0.13f, 0.13f, 0.0f);
 
     shadeLambert(&position_id, &projection_id, &modelview_id, &lightpos_id, &color_id, &opacity_id);
     glUniform3f(lightpos_id, lightpos.x, lightpos.y, lightpos.z);
