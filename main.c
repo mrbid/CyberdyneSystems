@@ -127,11 +127,6 @@ void timestamp(char* ts)
     strftime(ts, 16, "%H:%M:%S", localtime(&tt));
 }
 
-static inline float fRandFloat(const float min, const float max)
-{
-    return min + randf() * (max-min); 
-}
-
 void timeTaken(uint ss)
 {
     if(ss == 1)
@@ -160,14 +155,7 @@ void timeTaken(uint ss)
     }
 }
 
-static inline uint isnorm(const float f)
-{
-    if(isnormal(f) == 1 || f == 0.f)
-        return 1;
-    return 0;
-}
-
-float urandf()
+float urandf() // not used
 {
     static const float FLOAT_UINT64_MAX = (float)UINT64_MAX;
     int f = open("/dev/urandom", O_RDONLY | O_CLOEXEC);
@@ -177,7 +165,12 @@ float urandf()
     return (((float)s)+1e-7f) / FLOAT_UINT64_MAX;
 }
 
-float uRandFloat(const float min, const float max)
+static inline float fRandFloat(const float min, const float max) // not used
+{
+    return min + randf() * (max-min); 
+}
+
+float uRandFloat(const float min, const float max) // not used
 {
     return ( urandf() * (max-min) ) + min;
 }
@@ -191,7 +184,7 @@ uint64_t urand()
     return s;
 }
 
-uint64_t microtime()
+uint64_t microtime() // not used
 {
     struct timeval tv;
     struct timezone tz;
