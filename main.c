@@ -97,7 +97,7 @@ ESModel mdlEyes;
 ESModel mdlTri;
 
 // game vars
-#define FAR_DISTANCE 1000.f
+#define FAR_DISTANCE 60.f
 #define MAX_SPHERES  1024
 uint RENDER_PASS = 0;
 double st=0; // start time
