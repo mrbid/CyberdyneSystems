@@ -172,7 +172,7 @@ static inline float fRandFloat(const float min, const float max) // not used
 
 float uRandFloat(const float min, const float max) // not used
 {
-    return ( urandf() * (max-min) ) + min;
+    return urandf() * (max-min) + min;
 }
 
 uint64_t urand()
@@ -226,9 +226,7 @@ void rSphere(f32 x, f32 y, f32 z)
     mScale(&model, SPHERE_SCALE, SPHERE_SCALE, SPHERE_SCALE);
     mMul(&modelview, &model, &view);
 
-    glUniformMatrix4fv(projection_id, 1, GL_FALSE, (f32*) &projection.m[0][0]);
     glUniformMatrix4fv(modelview_id, 1, GL_FALSE, (f32*) &modelview.m[0][0]);
-    
     glDrawElements(GL_TRIANGLES, low_numind, GL_UNSIGNED_SHORT, 0);
 }
 
@@ -241,9 +239,7 @@ void rTri(f32 x, f32 y, f32 z)
     mScale(&model, SPHERE_SCALE, SPHERE_SCALE, SPHERE_SCALE);
     mMul(&modelview, &model, &view);
 
-    glUniformMatrix4fv(projection_id, 1, GL_FALSE, (f32*) &projection.m[0][0]);
     glUniformMatrix4fv(modelview_id, 1, GL_FALSE, (f32*) &modelview.m[0][0]);
-    
     glDrawElements(GL_TRIANGLES, tri_numind, GL_UNSIGNED_SHORT, 0);
 }
 
@@ -385,6 +381,7 @@ void main_loop()
     if(RENDER_PASS == 1 && cxo != 0.f)
     {
         shadeLambert1(&position_id, &projection_id, &modelview_id, &lightpos_id, &normal_id, &color_id, &opacity_id);
+        glUniformMatrix4fv(projection_id, 1, GL_FALSE, (f32*) &projection.m[0][0]);
         glUniform3f(lightpos_id, lightpos.x, lightpos.y, lightpos.z);
         glUniform1f(opacity_id, 0.1f);
         
@@ -393,7 +390,6 @@ void main_loop()
         mScale(&model, 1.3f, 1.3f, 1.3f);
         mMul(&modelview, &model, &view);
 
-        glUniformMatrix4fv(projection_id, 1, GL_FALSE, (f32*) &projection.m[0][0]);
         glUniformMatrix4fv(modelview_id, 1, GL_FALSE, (f32*) &modelview.m[0][0]);
 
         glUniform3f(color_id, 0.7f, 0.7f, 0.7f);
@@ -412,6 +408,7 @@ void main_loop()
         glDisable(GL_BLEND);
 
         shadeLambert(&position_id, &projection_id, &modelview_id, &lightpos_id, &color_id, &opacity_id);
+        glUniformMatrix4fv(projection_id, 1, GL_FALSE, (f32*) &projection.m[0][0]);
         glUniform3f(lightpos_id, lightpos.x, lightpos.y, lightpos.z);
         glUniform1f(opacity_id, 1.0f);
 
@@ -631,6 +628,7 @@ int main(int argc, char** argv)
     glClearColor(0.13f, 0.13f, 0.13f, 0.0f);
 
     shadeLambert(&position_id, &projection_id, &modelview_id, &lightpos_id, &color_id, &opacity_id);
+    glUniformMatrix4fv(projection_id, 1, GL_FALSE, (f32*) &projection.m[0][0]);
     glUniform3f(lightpos_id, lightpos.x, lightpos.y, lightpos.z);
     glUniform1f(opacity_id, 1.0f);
 
