@@ -157,12 +157,12 @@ void timeTaken(uint ss)
 
 float urandf() // not used
 {
-    static const float FLOAT_UINT64_MAX = (float)UINT64_MAX;
+    static const float RECIP_FLOAT_UINT64_MAX = 1.f/(float)UINT64_MAX;
     int f = open("/dev/urandom", O_RDONLY | O_CLOEXEC);
     uint64_t s = 0;
-    ssize_t result = read(f, &s, sizeof(uint64_t));
+    read(f, &s, sizeof(uint64_t));
     close(f);
-    return (((float)s)+1e-7f) / FLOAT_UINT64_MAX;
+    return ((float)s) * RECIP_FLOAT_UINT64_MAX;
 }
 
 static inline float fRandFloat(const float min, const float max) // not used
@@ -633,7 +633,6 @@ int main(int argc, char** argv)
     shadeLambert(&position_id, &projection_id, &modelview_id, &lightpos_id, &color_id, &opacity_id);
     glUniform3f(lightpos_id, lightpos.x, lightpos.y, lightpos.z);
     glUniform1f(opacity_id, 1.0f);
-    modelBind(&mdlSphere); // we are only using one model
 
 //*************************************
 // execute update / render loop
